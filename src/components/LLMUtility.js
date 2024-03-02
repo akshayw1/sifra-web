@@ -9,13 +9,18 @@ class LLM {
     }
 
     async getRespose(prompt) {
+        console.log("prompt", prompt);
+        console.log(this.openai.chat.completions.create);
         const completion = await this.openai.chat.completions.create({
             messages: [
                 {
                     role: "system",
                     content: this.masterPrompt,
                 },
-                prompt,
+                {
+                    role: "user",
+                    content: prompt,
+                }
             ],
             model: "gpt-3.5-turbo-1106",
             // response_format: { type: "json_object" },
@@ -24,6 +29,5 @@ class LLM {
         return completion.choices[0].message.content;
     }
 }
-
 
 export default LLM;

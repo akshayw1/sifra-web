@@ -177,19 +177,28 @@ export const Avatar = () => {
     // }, [llmReplying]);
 
     useEffect(() => {
-        let ignore = false;
+        // let ignore = false;
         if (!listening) {
-            console.log("Not Listening");
-            setMySpeechText(transcript);
-            console.log(`transcript placed = ${transcript}`);
-            if(!ignore)speakSelectedText();
+
+            async function responce() {
+                // console.log(llm);
+                
+                const llm_responce = await llm.getRespose(transcript);
+                setMySpeechText(llm_responce);
+            }
+            if(transcript.length>0)
+            responce();
         }
     
         return () => {
-            ignore = true;
+            // ignore = true;
         };
     }, [listening]);
 
+
+    useEffect(() => { 
+        speakSelectedText();
+    }, [mySpeechText])
 
 
     
