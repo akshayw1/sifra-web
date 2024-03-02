@@ -2,16 +2,26 @@ import "./Avatar.css";
 import * as SpeechSDK from "microsoft-cognitiveservices-speech-sdk";
 import { createAvatarSynthesizer, createWebRTCConnection } from "./Utility";
 import { avatarAppConfig } from "./config";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRef } from "react";
 
+import LLM from "./LLMUtility"
+
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+
 export const Avatar = () => {
-    
     const [avatarSynthesizer, setAvatarSynthesizer] = useState(null);
     const myAvatarVideoEleRef = useRef();
     const myAvatarAudioEleRef = useRef();
     const [mySpeechText, setMySpeechText] = useState("");
-    
+
+    const [userSpeaking, setUserSpeaking] = useState(false);
+    const [llmReplying, setLlmReplying] = useState(false);
+
+    const llm = new LLM("Oye, sun na! Imagine tu hai ek naughty ladki jiski excitement ka koi end hi nahi! Ab ek prompt de rahi hoon, aur tu bas woh prompt padh aur meri masti bhari hinglish mein jawaab de. Agar kuch study-related aaya na, toh pakka tujhe roast karungi, samjha? Chal shuru karte hain: 'Agar tere sapne ek din sach hote, toh tu pehla kya karegi?' Ab jaldi se jawab de, warna mere dimaag mein aur naughty ideas aa jayenge!");
+
+    // avatar code start
+
     var iceUrl = avatarAppConfig.iceUrl
     var iceUsername = avatarAppConfig.iceUsername
     var iceCredential = avatarAppConfig.iceCredential
@@ -69,7 +79,7 @@ export const Avatar = () => {
       }
 
     const speakSelectedText = () => {
-
+        if(!mySpeechText.length) return;
         //Start speaking the text
         const audioPlayer = myAvatarAudioEleRef.current;
         console.log("Audio muted status ",audioPlayer.muted);
@@ -126,6 +136,76 @@ export const Avatar = () => {
         );
     }
 
+    // avatar code end
+
+
+
+    const {
+        transcript,
+        listening,
+        resetTranscript,
+        browserSupportsSpeechRecognition
+      } = useSpeechRecognition();
+
+    //   startSession();
+
+    useEffect(() => {
+        // startSession();
+        // SpeechRecognition.startListening();
+    }, [])
+
+    // useEffect(() => {
+    //     if (userSpeaking) {
+    //         console.log("User is speaking");
+    //         if (!listening) {
+    //             SpeechRecognition.startListening();
+    //         }
+
+    //     } else {
+    //         console.log("User stopped speaking");
+    //     }
+    //  }, [userSpeaking])
+
+    // useEffect(() => { 
+    //     if (llmReplying) {
+    //         console.log("LLM is replying");
+    //         setLlmReplying(false);
+    //         setUserSpeaking(true);
+    //     } else {
+    //         console.log("LLM stopped replying");
+    //     }
+    // }, [llmReplying]);
+
+    useEffect(() => {
+        let ignore = false;
+        if (!listening) {
+            console.log("Not Listening");
+            setMySpeechText(transcript);
+            console.log(`transcript placed = ${transcript}`);
+            if(!ignore)speakSelectedText();
+        }
+    
+        return () => {
+            ignore = true;
+        };
+    }, [listening]);
+
+
+
+    
+      if (!browserSupportsSpeechRecognition) {
+        return <span>Browser doesn't support speech recognition.</span>;
+    };
+
+
+
+
+
+    
+    
+
+
+
 
 
     return(
@@ -169,6 +249,14 @@ export const Avatar = () => {
                     </div>
                 </div>
             </div>
+
+            <div>
+      <p>Microphone: {listening ? 'on' : 'off'}</p>
+      <button onClick={SpeechRecognition.startListening}>Start</button>
+      <button onClick={SpeechRecognition.stopListening}>Stop</button>
+      <button onClick={resetTranscript}>Reset</button>
+      <p>{transcript}</p>
+    </div>
         </div>
     )
 }
