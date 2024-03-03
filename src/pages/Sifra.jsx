@@ -54,8 +54,8 @@ const Sifra = () => {
    
       <div className="back h-[100vh]">
         <div className="main-chat p-4 gap-10 flex">
-          <div className="avatar-bot rounded-lg bg-[#ffffff] h-[85vh] w-[100%]">
-            <h2 className="text-center font-semibold mt-4  cutsomhead">Hey, Sifra here,  how can I help you?</h2>
+          <div className="avatar-bot rounded-lg bg-[#ffffff] h-[full] w-[100%]">
+            <h2 className="text-center font-semibold mt-4 text-4xl  cutsomhead">Hey, Sifra here,  how can I help you?</h2>
           <Avatar config={dynamicConfig} />
 
           </div>

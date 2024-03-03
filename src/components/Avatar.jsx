@@ -270,12 +270,12 @@ export const Avatar = ({config}) => {
 
                         </audio>
                     </div>
-                    <div className="myButtonGroup d-flex justify-content-around">
-                        <button className="btn text-white bg-gradient-to-r from-violet-600 to-indigo-600"
+                    <div className="myButtonGroup flex gap-12 justify-center">
+                        <button className="p-2 rounded-full  text-white bg-gradient-to-r from-violet-600 to-indigo-600"
                             onClick={startSession}>
                           {serCon ? 'Connected' : 'Connect'} 
                         </button>
-                        <button className="btn text-white bg-gradient-to-r from-violet-600 to-indigo-600"
+                        <button className="p-2 rounded-full  text-white bg-gradient-to-r from-violet-600 to-indigo-600"
                             onClick={stopSession}>
                             Disconnect
                         </button>
