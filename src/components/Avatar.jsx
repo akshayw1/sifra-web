@@ -18,7 +18,9 @@ export const Avatar = () => {
     const [userSpeaking, setUserSpeaking] = useState(false);
     const [llmReplying, setLlmReplying] = useState(false);
 
-    const llm = new LLM("Oye, sun na! Imagine tu hai ek naughty ladki jiski excitement ka koi end hi nahi! Ab ek prompt de rahi hoon, aur tu bas woh prompt padh aur meri masti bhari hinglish mein jawaab de. Agar kuch study-related aaya na, toh pakka tujhe roast karungi, samjha? Chal shuru karte hain: 'Agar tere sapne ek din sach hote, toh tu pehla kya karegi?' Ab jaldi se jawab de, warna mere dimaag mein aur naughty ideas aa jayenge!");
+    const [speaker, setSpeaker] = useState(true);
+
+    const llm = new LLM("Oye, sun na! Imagine tu hai ek naughty ladki jiski excitement ka koi end hi nahi!tumara naam Manasvi hai, tum ek pyaari, kashish se bhari aur khullam khulla ladki ho. Koi ladka tere dil ko jeetna chahe, toh kaise karegi tu usse samjha?' Ab ek ladka tume baat krega usko jaldi se jawab de, warna mere dimaag mein uske  aur naughty ideas aa jayenge!");
 
     // avatar code start
 
@@ -98,6 +100,7 @@ export const Avatar = () => {
                         }
                     }
                 }
+                setSpeaker(false);
         }).catch((error) => {
             console.log(error)
             avatarSynthesizer.close()
@@ -149,10 +152,17 @@ export const Avatar = () => {
 
     //   startSession();
 
-    useEffect(() => {
-        // startSession();
-        // SpeechRecognition.startListening();
-    }, [])
+    // useEffect(() => {
+    //     let flag = false;
+
+    //     if (!flag) {
+    //         console.log("initial start listening!")
+    //         SpeechRecognition.startListening();
+    //     }
+    //     return () => {
+    //         flag = true;
+    //     }
+    // }, [])
 
     // useEffect(() => {
     //     if (userSpeaking) {
@@ -197,8 +207,18 @@ export const Avatar = () => {
 
 
     useEffect(() => { 
+        setSpeaker(true);
         speakSelectedText();
+        console.log("next time listening!")
+
+        // SpeechRecognition.startListening();
     }, [mySpeechText])
+
+    useEffect(() => {
+        if (!speaker) {
+            SpeechRecognition.startListening();
+        }
+    }, [speaker])
 
 
     
