@@ -1,41 +1,4 @@
-.myAvatarDemoText {
-  font-size: larger;
-  font-family: "Poppins";
-  font-weight: 600;
+.back{
+  background: rgb(2,0,36);
+background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(34,2,96,1) 35%, rgba(86,0,181,1) 100%);
 }
-
-.myAvatarContainer {
-  text-align: center;
-  margin-top: 5rem;
-}
-
-.myAvatarVideoRootDiv {
-  margin-top: 3rem;
-}
-
-.myTextArea {
-  height: 11rem;
-  width: 35rem;
-  border-radius: 5px;
-  border-color: grey;
-}
-
-.myAvatarVideo {
-  /* background-color: grey; */
-  height: 20rem;
-  width: 13rem;
-  border-radius: 8px;
-}
-
-.myVideoDiv {
-  height: 22rem;
-  margin-bottom: 2rem;
-}
-
-video {
-  margin: 0px 0px 20px 0px;
-  padding-right: 5rem;
-  width: 20rem;
-  height: 22rem;
-  border-radius: 8px;
-} 

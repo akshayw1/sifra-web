@@ -1,11 +1,13 @@
 import * as SpeechSDK from "microsoft-cognitiveservices-speech-sdk";
 import { avatarAppConfig } from "./config";
-const cogSvcRegion = avatarAppConfig.cogSvcRegion
-const cogSvcSubKey = avatarAppConfig.cogSvcSubKey
-const voiceName = avatarAppConfig.voiceName
-const avatarCharacter = avatarAppConfig.avatarCharacter
-const avatarStyle = avatarAppConfig.avatarStyle
-const avatarBackgroundColor = "#FFFFFFFF";
+// const cogSvcRegion = avatarAppConfig.cogSvcRegion
+// const cogSvcSubKey = avatarAppConfig.cogSvcSubKey
+// const voiceName = avatarAppConfig.voiceName
+// const avatarCharacter = avatarAppConfig.avatarCharacter
+// const avatarStyle = avatarAppConfig.avatarStyle
+// const avatarBackgroundColor = "#000";
+
+
 
 
 export const createWebRTCConnection = (iceServerUrl, iceServerUsername, iceServerCredential) => {
@@ -22,7 +24,8 @@ export const createWebRTCConnection = (iceServerUrl, iceServerUsername, iceServe
 
 }
 
-export const createAvatarSynthesizer = () => {
+export const createAvatarSynthesizer = (config) => {
+    const { cogSvcRegion, cogSvcSubKey, voiceName, avatarCharacter, avatarStyle } = config;
 
     const speechSynthesisConfig = SpeechSDK.SpeechConfig.fromSubscription(cogSvcSubKey, cogSvcRegion)
 
@@ -39,7 +42,7 @@ export const createAvatarSynthesizer = () => {
     const talkingAvatarStyle = avatarStyle
 
     const avatarConfig = new SpeechSDK.AvatarConfig(talkingAvatarCharacter, talkingAvatarStyle, videoFormat)
-    avatarConfig.backgroundColor = avatarBackgroundColor;
+    avatarConfig.backgroundColor = "black";
     let avatarSynthesizer = new SpeechSDK.AvatarSynthesizer(speechSynthesisConfig, avatarConfig)
 
     avatarSynthesizer.avatarEventReceived = function (s, e) {

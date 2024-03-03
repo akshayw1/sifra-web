@@ -1,9 +1,10 @@
 import {React,useEffect,useRef} from "react";
-import { Avatar } from "./Avatar";
-import NavBar from "./NavBar";
+import { Avatar } from "../components/Avatar";
+import MainHome from "../components/NavBar";
+// import NavBar from "./NavBar";
 
 
-const Landing = () => {
+const John = () => {
     const videoRef = useRef(null);
 
     useEffect(() => {
@@ -48,10 +49,12 @@ const Landing = () => {
       
   return (
     <>
-   
+    <MainHome/>
       <div className="back h-[100vh]">
         <div className="main-chat p-4 gap-10 flex">
+       
           <div className="avatar-bot rounded-lg bg-[#ffffff] h-[85vh] w-[100%]">
+          <h1>Hey John here</h1>
           <Avatar config={dynamicConfig} />
 
           </div>
@@ -65,4 +68,4 @@ const Landing = () => {
   );
 };
 
-export default Landing;
+export default John;

@@ -4,6 +4,9 @@
     font-weight: 600;
 }
 
+* {
+    text-decoration: none;
+}
 .myAvatarContainer {
     text-align: center;
     margin-top: 5rem;
@@ -22,20 +25,112 @@
 
 .myAvatarVideo {
     /* background-color: grey; */
-    height: 20rem;
-    width: 13rem;
+    /* height: 80rem; */
+    width: 100%;    
     border-radius: 8px;
+}
+.myAvatarVideoElement{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+
 }
 
 .myVideoDiv {
-    height: 22rem;
+    height: 26rem;
     margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.iconPhone{
+    height:35px;
+    width: 35px;
+    margin: 0.4rem;
+    color: rgb(255, 255, 255);
+    fill: #fff;
+}
+
+.hearing{
+    justify-content: center;
+}
+
+.iconwrap{
+    justify-content: center;
+    display: flex;
+    background-color: blue;
+    height: 35px;
+    align-items: center;
+    width: 35px;
+    border-radius: 50px;
+    color: rgb(255, 255, 255);
 }
 
 video {
-    margin: 0px 0px 20px 0px;
-    padding-right: 5rem;
-    width: 20rem;
-    height: 22rem;
+    margin: 0px 0px 0px 0px;
+   
+    /* width: 60rem; */
+    height: 25rem;
     border-radius: 8px;
 } 
+
+.butt{
+    background: #000;
+}
+
+/* .vide-overlay{
+    background-color: #00000071;
+    z-index: 999999;
+} */
+
+
+.my-cam-video{
+    height: 100% !important;
+}
+
+.my-cam-video video{
+    height: 100% !important;
+}
+
+
+.offmicro {
+    display: inline-block;
+    position: relative;
+  }
+  
+  .slanting-line {
+    position: absolute;
+    width: 100%;
+    height: 2px; /* Adjust the height of the line */
+    background-color: black;
+    transform: rotate(-45deg);
+    transform-origin: 50% 50%;
+  }
+
+
+  /* Your CSS file or styling module */
+.transcript-container {
+    margin: 20px 0;
+  }
+
+  
+  
+  .transcript-text {
+    font-size: 1.2rem;
+    color: #333;
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-radius: 5px;
+    max-width: 500px;
+    margin: 0 auto;
+    overflow-wrap: break-word;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+
+  .cutsomhead{
+    color: rgb(2,0,36);
+color: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(34,2,96,1) 35%, rgba(86,0,181,1) 100%);
+  }

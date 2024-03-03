@@ -2,6 +2,7 @@ import { OpenAI } from "openai";
 class LLM {
     constructor(masterPrompt) {
         this.masterPrompt = masterPrompt;
+        console.log(process.env.REACT_APP_OPENAI_API_KEY);
         this.openai = new OpenAI({
             apiKey: process.env.REACT_APP_OPENAI_API_KEY,
             dangerouslyAllowBrowser: true,

@@ -1,9 +1,10 @@
 import {React,useEffect,useRef} from "react";
-import { Avatar } from "./Avatar";
-import NavBar from "./NavBar";
+import { Avatar } from "../components/Avatar";
+import MainHome from "../components/NavBar";
 
 
-const Landing = () => {
+
+const Sifra = () => {
     const videoRef = useRef(null);
 
     useEffect(() => {
@@ -43,15 +44,18 @@ const Landing = () => {
         avatarBackgroundColor: "rgba(255, 255, 255, 0)", // Transparent background
         iceUrl: "stun:relay.communication.microsoft.com:3478",
         iceUsername: "BQAANrOeSIAB2m5o5KGEoRHWlEeqY2ISg9N+QRNVp/oAAAAMARC9dYP5KjZFsJTtdPP3zgvljp6ZcWbXJqXjamng6SK3AM7I9+A=",
-        iceCredential: "bMmWbvT4bRrxxSukdyy/F6MCq/0="
+        iceCredential: "bMmWbvT4bRrxxSukdyy/F6MCq/0=",
+        masterprompt:"your name is sifra now"
     };
       
   return (
     <>
+      <MainHome/>
    
       <div className="back h-[100vh]">
         <div className="main-chat p-4 gap-10 flex">
           <div className="avatar-bot rounded-lg bg-[#ffffff] h-[85vh] w-[100%]">
+            <h2 className="text-center font-semibold mt-4  cutsomhead">Hey, Sifra here,  how can I help you?</h2>
           <Avatar config={dynamicConfig} />
 
           </div>
@@ -65,4 +69,4 @@ const Landing = () => {
   );
 };
 
-export default Landing;
+export default Sifra;

@@ -4,34 +4,41 @@ import { createAvatarSynthesizer, createWebRTCConnection } from "./Utility";
 import { avatarAppConfig } from "./config";
 import { useEffect, useState } from "react";
 import { useRef } from "react";
+import { MicrophoneIcon } from '@heroicons/react/solid';
+import { FaMicrophoneSlash,FaMicrophone } from "react-icons/fa";
+
 
 import LLM from "./LLMUtility"
 
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
-export const Avatar = () => {
+export const Avatar = ({config}) => {
     const [avatarSynthesizer, setAvatarSynthesizer] = useState(null);
     const myAvatarVideoEleRef = useRef();
     const myAvatarAudioEleRef = useRef();
     const [mySpeechText, setMySpeechText] = useState("");
+    const [serCon,setserCon] = useState(false);
 
     const [userSpeaking, setUserSpeaking] = useState(false);
     const [llmReplying, setLlmReplying] = useState(false);
 
     const [speaker, setSpeaker] = useState(true);
 
-    const llm = new LLM("Oye, sun na! Imagine tu hai ek naughty ladki jiski excitement ka koi end hi nahi!tumara naam Manasvi hai, tum ek pyaari, kashish se bhari aur khullam khulla ladki ho. Koi ladka tere dil ko jeetna chahe, toh kaise karegi tu usse samjha?' Ab ek ladka tume baat krega usko jaldi se jawab de, warna mere dimaag mein uske  aur naughty ideas aa jayenge!");
+    const llm = new LLM(config.masterprompt);
 
     // avatar code start
 
-    var iceUrl = avatarAppConfig.iceUrl
-    var iceUsername = avatarAppConfig.iceUsername
-    var iceCredential = avatarAppConfig.iceCredential
+    var iceUrl = config.iceUrl
+    var iceUsername = config.iceUsername
+    var iceCredential = config.iceCredential
 
     const handleSpeechText = (event) => {
         setMySpeechText(event.target.value);
     }
 
+    // useEffect(() => {
+    //     setAvatarSynthesizer(createAvatarSynthesizer(config));
+    // }, [config]);
 
     const handleOnTrack = (event) => {
 
@@ -82,6 +89,9 @@ export const Avatar = () => {
 
     const speakSelectedText = () => {
         if(!mySpeechText.length) return;
+        // if(!serCon){
+        //     return alert("WebRTC not established yet to be connected");
+        // }
         //Start speaking the text
         const audioPlayer = myAvatarAudioEleRef.current;
         console.log("Audio muted status ",audioPlayer.muted);
@@ -115,17 +125,19 @@ export const Avatar = () => {
         peerConnection.addTransceiver('video', { direction: 'sendrecv' })
         peerConnection.addTransceiver('audio', { direction: 'sendrecv' })
         
-        let avatarSynthesizer = createAvatarSynthesizer();
+        let avatarSynthesizer = createAvatarSynthesizer(config);
         setAvatarSynthesizer(avatarSynthesizer);
         peerConnection.oniceconnectionstatechange = e => {
             console.log("WebRTC status: " + peerConnection.iceConnectionState)
     
             if (peerConnection.iceConnectionState === 'connected') {
                 console.log("Connected to Azure Avatar service");
+                setserCon(true);
             }
     
             if (peerConnection.iceConnectionState === 'disconnected' || peerConnection.iceConnectionState === 'failed') {
                 console.log("Azure Avatar service Disconnected");
+                setserCon(false);
             }
         }
     
@@ -139,7 +151,7 @@ export const Avatar = () => {
         );
     }
 
-    // avatar code end
+
 
 
 
@@ -227,8 +239,14 @@ export const Avatar = () => {
     };
 
 
-
-
+    const toggleListening = () => {
+        if (listening) {
+          SpeechRecognition.stopListening();
+        } else {
+          SpeechRecognition.startListening();
+        }
+      };
+      
 
     
     
@@ -239,7 +257,7 @@ export const Avatar = () => {
 
     return(
         <div className="container myAvatarContainer">
-            <p className="myAvatarDemoText">Azure Avatar Demo</p>
+           
             <div className="container myAvatarVideoRootDiv d-flex justify-content-around">
                 <div  className="myAvatarVideo">
                     <div id="myAvatarVideo" className="myVideoDiv">
@@ -253,26 +271,26 @@ export const Avatar = () => {
                         </audio>
                     </div>
                     <div className="myButtonGroup d-flex justify-content-around">
-                        <button className="btn btn-success"
+                        <button className="btn text-white bg-gradient-to-r from-violet-600 to-indigo-600"
                             onClick={startSession}>
-                            Connect
+                          {serCon ? 'Connected' : 'Connect'} 
                         </button>
-                        <button className="btn btn-danger"
+                        <button className="btn text-white bg-gradient-to-r from-violet-600 to-indigo-600"
                             onClick={stopSession}>
                             Disconnect
                         </button>
                     </div>
                 </div>
-                <div className="myTextArea">
+                <div className="myTextArea hidden">
                     
                     <textarea className="myTextArea" onChange={handleSpeechText}>
 
                     </textarea>
-                    <div className="myButtonGroup d-flex justify-content-around">
-                        <button className="btn btn-success" onClick={speakSelectedText}>
+                    <div className="myButtonGroup hidden d-flex justify-content-around">
+                        <button className=" butt te bg-gradient-to-r from-violet-600 to-indigo-600" onClick={speakSelectedText}>
                             Speak
                         </button>
-                        <button className="btn btn-warning" onClick={stopSpeaking}>
+                        <button className=" butt bg-gradient-to-r from-violet-600 to-indigo-600" onClick={stopSpeaking}>
                             Stop
                         </button>
                     </div>
@@ -280,11 +298,20 @@ export const Avatar = () => {
             </div>
 
             <div>
-      <p>Microphone: {listening ? 'on' : 'off'}</p>
-      <button onClick={SpeechRecognition.startListening}>Start</button>
-      <button onClick={SpeechRecognition.stopListening}>Stop</button>
-      <button onClick={resetTranscript}>Reset</button>
-      <p>{transcript}</p>
+            <div className="hearing flex">
+        <div className="iconwrap bg-gradient-to-r from-violet-600 to-indigo-600" onClick={toggleListening}>
+          {listening ? <FaMicrophone /> : <FaMicrophoneSlash />}
+        </div>
+      </div>
+           
+      {/* <button onClick={SpeechRecognition.startListening}>Start</button>
+      <button onClick={SpeechRecognition.stopListening}>Stop</button> */}
+      {/* <button onClick={resetTranscript}>Reset</button> */}
+
+      <div className="transcript-container">
+        <p className="transcript-text font-semibold">{transcript}</p>
+      </div>
+      
     </div>
         </div>
     )

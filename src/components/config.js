@@ -1,12 +1,19 @@
-
 export const avatarAppConfig = {
-    cogSvcRegion : "eastus",
-    cogSvcSubKey : "54a43ca6c8714a9aa22c9ffc10e54c04",
-    voiceName : "hi-IN-SwaraNeural",
-    avatarCharacter : "lisa",
-    avatarStyle : "casual-sitting",
-    avatarBackgroundColor : "#FFFFFFFF",
-    iceUrl : "stun:relay.communication.microsoft.com:3478",
-    iceUsername : "BQAANhqbDYAB2m4nhTmf9Xpc3OrbYS61nEz2tZ18cEEAAAAMARBZ51mjKP1J8bNClSDvDnz5kF4JJDlVnR5wzGdRd1wLmL2W67k=",
-    iceCredential : "PgVf3yQ4qlDwqeNd3kL9/YthSxU="
-  }
+  cogSvcRegion: "eastus",
+  cogSvcSubKey: "4e8e4c5525614cc18d70e25327142b2c",
+  voiceName: "hi-IN-SwaraNeural",
+  avatarCharacter: "lisa",
+  avatarStyle: "casual-sitting",
+  avatarBackgroundColor: "rgba(255, 255, 255, 0)", // Transparent background
+  iceUrl: "stun:relay.communication.microsoft.com:3478",
+  iceUsername: "BQAANrOeSIAB2m5o5KGEoRHWlEeqY2ISg9N+QRNVp/oAAAAMARC9dYP5KjZFsJTtdPP3zgvljp6ZcWbXJqXjamng6SK3AM7I9+A=",
+  iceCredential: "bMmWbvT4bRrxxSukdyy/F6MCq/0="
+};
+
+
+// export const updateVoiceName = (newVoiceName) => {
+//   avatarAppConfig.voiceName = newVoiceName;
+// };
+
+// Example usage:
+// updateVoiceName("hi-IN-SwaraNeural");
